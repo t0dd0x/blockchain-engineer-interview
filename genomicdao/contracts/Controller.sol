@@ -37,6 +37,8 @@ contract Controller {
     // EVENTS
     //
     event UploadData(string docId, uint256 sessionId);
+    event GNFTMinted(string docId, uint256 sessionId, uint256 tokenId);
+    event PCSPRewarded(string docId, uint256 sessionId, uint256 riskScore, uint256 rewardAmount);
 
     constructor(address nftAddress, address pcspAddress) {
         geneNFT = GeneNFT(nftAddress);
@@ -65,7 +67,7 @@ contract Controller {
         string memory proof,
         uint256 sessionId,
         uint256 riskScore
-    ) public {
+    ) public virtual {
         require(proof.equal("success"));
         require(!docSubmits[docId], "Doc already been submitted");
         // Cache here for saving reading cost from storage
@@ -85,9 +87,12 @@ contract Controller {
         sessions[sessionId] = session;
 
         // Close the session before sending any reward to the user to prevent a reentrancy attack
-        uint256 nftToken = geneNFT.safeMint(msg.sender);
-        nftDocs[nftToken] = docId;
-        pcspToken.reward(msg.sender, riskScore);
+        uint256 nftTokenId = geneNFT.safeMint(msg.sender);
+        nftDocs[nftTokenId] = docId;
+        emit GNFTMinted(docId, sessionId, nftTokenId);
+
+        uint256 rewardAmount = pcspToken.reward(msg.sender, riskScore);
+        emit PCSPRewarded(docId, sessionId, riskScore, rewardAmount);
     }
 
     function getSession(uint256 sessionId) public view returns(UploadSession memory) {

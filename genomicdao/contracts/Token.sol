@@ -22,8 +22,10 @@ contract PostCovidStrokePrevention is ERC20, ERC20Burnable, Ownable {
         _mint(to, amount);
     }
 
-    function reward(address to, uint256 riskScore) public onlyOwner {
+    function reward(address to, uint256 riskScore) public onlyOwner returns (uint256) {
         require(riskScore > 0 && riskScore <= 4, "No reward for the risk score");
-        _mint(to, riskScoreToAward[riskScore]);
+        uint256 rewardAmount = riskScoreToAward[riskScore];
+        _mint(to, rewardAmount);
+        return rewardAmount;
     }
 }

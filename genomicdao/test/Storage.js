@@ -60,7 +60,9 @@ describe("Controller", function () {
       const sessionId = 0
 
       await controller.uploadData(docId)
-      await controller.confirm(docId, contentHash, proof, sessionId, riskScore)
+      await expect(controller.confirm(docId, contentHash, proof, sessionId, riskScore))
+        .to.emit(controller, "GNFTMinted")
+        .withArgs("doc1", 0, 0)
 
       expect(await nft.ownerOf(0)).to.equal(owner.address);
     })
@@ -77,7 +79,9 @@ describe("Controller", function () {
       const awardAmount = BigInt("15000") * BigInt("10") ** BigInt("18")
 
       await controller.connect(addr1).uploadData(docId)
-      await controller.connect(addr1).confirm(docId, contentHash, proof, sessionId, riskScore)
+      await expect(controller.connect(addr1).confirm(docId, contentHash, proof, sessionId, riskScore))
+        .to.emit(controller, "PCSPRewarded")
+        .withArgs("doc1", 0, 1, awardAmount)
 
       const ownerBalance = await pcspToken.balanceOf(addr1.address)
 

@@ -1,0 +1,21 @@
+{
+  "name": "genomicdao",
+  "dockerComposeFile": "compose.yaml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "postCreateCommand": ".devcontainer/post-create.sh",
+  "waitFor": "postCreateCommand",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "tintinweb.vscode-solidity-language",
+        "tintinweb.solidity-visual-auditor",
+        "nomicfoundation.hardhat-solidity"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  }
+}

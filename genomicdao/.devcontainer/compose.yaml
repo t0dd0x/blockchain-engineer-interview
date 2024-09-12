@@ -1,0 +1,10 @@
+services:
+  dev:
+    build: .
+    image: dev-genomicdao
+    volumes:
+      - ~/.ssh:/root/.ssh
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    ports:
+      - 9650:9650

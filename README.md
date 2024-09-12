@@ -7,6 +7,7 @@
 * [Instruction](#instruction)
 * [How to run it](#how-to-run-it)
 * [File structure](#file-structure)
+* [Running in Devcontainer and Deploy contract to local Avax Subnet](#running-in-devcontainer-and-deploy-contract-to-local-avax-subnet)
  
 ## Description
 GenomicDAO is a cutting-edge DeSci (Decentralized Science) platform harnessing the power of AI to revolutionize precision medicine. The platform is leading the way in Post-Covid Stroke Prevention (PCSP), offering users not only access to advanced genetic testing services but also a unique opportunity to participate in the governance of drug discovery and development processes.
@@ -130,4 +131,37 @@ genomicdao/                 # Directory contains main
 │   ├── deploy.js
 └── ...
 ```
+
+## Running in Devcontainer and Deploy contract to local Avax Subnet
+
+### Prerequisites
+- **Visual Studio Code**: Ensure you have [VSCode](https://code.visualstudio.com/) installed.
+- **Docker**: Make sure [Docker](https://www.docker.com/) is installed and running on your machine.
+- **Remote - Containers Extension**: Install the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension in VSCode.
+
+### Steps to Enter the Development Container
+
+1. **Open Your Project in VSCode**
+
+   Launch VSCode and open the folder containing your project.
+
+2. **Open the Command Palette**
+
+   Open the Command Palette by pressing `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS).
+
+3. **Select the Development Container**
+
+   Type `Dev Containers: Open Workspace in Container...` in the Command Palette and select it. VSCode will now build the development container based on the configuration specified in your `.devcontainer` folder.
+
+4. **Wait for the Container to Build**
+
+   VSCode will build and start the container. This may take a few minutes. Once the container is up and running, you will be automatically connected to it.
+
+5. **Deployment**
+
+   To deploy to a local Avax Subnet, run the following command inside container:
+
+    ```
+    npx hardhat run scripts/deploy.js --network life_local
+    ```
 

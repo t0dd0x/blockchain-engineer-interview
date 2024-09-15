@@ -1,0 +1,29 @@
+services:
+  subnet:
+    build: subnet
+    container_name: genomicdao_subnet
+    ports:
+      - 9650:9650
+    networks:
+      default:
+        aliases:
+          - subnet.local
+      
+  genomicdao:
+    build: genomicdao
+    container_name: genomicdao_contract
+    command: bash entrypoint.sh
+    volumes:
+      - ./genomicdao:/workspaces/app
+    depends_on:
+      subnet:
+        condition: service_healthy
+
+  # backend:
+  #   build: backend
+  #   command: bash entrypoint.sh
+  #   volumes:
+  #     - ./backend:/workspaces/app
+  #   depends_on:
+  #     - subnet
+    

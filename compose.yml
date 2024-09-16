@@ -26,7 +26,20 @@ services:
     volumes:
       - ./backend:/workspaces/app
       - ./genomicdao/artifacts/contracts:/workspaces/artifacts
+    ports:
+      - 3001:3001
     depends_on:
       genomicdao:
+        condition: service_healthy
+
+  tests:
+    build: tests
+    container_name: genomicdao_tests
+    command: bash entrypoint.sh
+    volumes:
+      - ./tests:/workspaces/app
+      - ./genomicdao/artifacts/contracts:/workspaces/artifacts
+    depends_on:
+      backend:
         condition: service_healthy
     

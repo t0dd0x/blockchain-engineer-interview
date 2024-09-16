@@ -37,6 +37,7 @@ contract Controller {
     // EVENTS
     //
     event UploadData(string docId, uint256 sessionId);
+    event ConfirmDoc(string docId, uint256 sessionId);
     event GNFTMinted(string docId, uint256 sessionId, uint256 tokenId);
     event PCSPRewarded(string docId, uint256 sessionId, uint256 riskScore, uint256 rewardAmount);
 
@@ -93,6 +94,8 @@ contract Controller {
 
         uint256 rewardAmount = pcspToken.reward(msg.sender, riskScore);
         emit PCSPRewarded(docId, sessionId, riskScore, rewardAmount);
+
+        emit ConfirmDoc(docId, sessionId);
     }
 
     function getSession(uint256 sessionId) public view returns(UploadSession memory) {

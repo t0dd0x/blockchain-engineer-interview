@@ -19,11 +19,14 @@ services:
       subnet:
         condition: service_healthy
 
-  # backend:
-  #   build: backend
-  #   command: bash entrypoint.sh
-  #   volumes:
-  #     - ./backend:/workspaces/app
-  #   depends_on:
-  #     - subnet
+  backend:
+    build: backend
+    container_name: genomicdao_backend
+    command: bash entrypoint.sh
+    volumes:
+      - ./backend:/workspaces/app
+      - ./genomicdao/artifacts/contracts:/workspaces/artifacts
+    depends_on:
+      genomicdao:
+        condition: service_healthy
     
